@@ -10,7 +10,13 @@ use Macnie\Tsp\TspClient;
 try{
      $config = [
         'gateway'=>'',
-        'token'=>''
+        'token'=>'',
+        'tablestore'=>[
+            'gateway'=>'',
+            'appkey'=>'',
+            'secret'=>'',
+            'database'=>''
+        ]
      ];
      $client = new TspClient($config);
      $res = $client->setHost($imei_sn,$host,$port);
