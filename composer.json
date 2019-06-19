@@ -1,0 +1,32 @@
+{
+  "name": "macnie/tsp-sdk",
+  "type": "library",
+  "description": "TSPHTTP连接SDK",
+  "homepage": "https://github.com/macnie/tsp-sdk",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "macnie",
+      "email": "mac@lenmy.com",
+      "homepage": "https://www.macnie.com",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "php": ">=7.2.0",
+    "php-curl-class/php-curl-class": "*"
+  },
+  "autoload" : {
+    "psr-4": {
+      "Macnie\\Tsp\\": "src/tsp"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Macnie\\Tests\\Tsp\\": "src/tests/easemob"
+    }
+  },
+  "scripts": {
+    "test": "vendor/bin/phpunit"
+  }
+}
