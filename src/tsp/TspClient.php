@@ -39,7 +39,7 @@ class TspClient
      */
     public function isOnline($imei_sn){
         $res = $this->get('isOnline',['imei_sn'=>$imei_sn]);
-        return $res['online'];
+        return $res['data']['is_online'];
     }
 
     /**
@@ -49,7 +49,7 @@ class TspClient
      */
     public function getOnlineCount(){
         $res = $this->get('getOnlineCount');
-        return $res['online_count'];
+        return $res['data']['online_count'];
     }
     /**
      * 获取IMEI当前所有信息
