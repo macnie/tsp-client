@@ -195,7 +195,7 @@ class TspClient
      * @param integer $port 端口
      */
     public function setHost($imei_sn,$host,$port = 2232){
-        return $this->post('setUpload',['imei_sn'=>$imei_sn,'host'=>$host,'port'=>$port]);
+        return $this->post('setHost',['imei_sn'=>$imei_sn,'host'=>$host,'port'=>$port]);
     }
 
     /**
