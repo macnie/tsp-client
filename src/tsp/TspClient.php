@@ -251,7 +251,7 @@ class TspClient
      * @return mixed
      * @throws \Exception
      */
-    private function get($action,$params){
+    private function get($action,$params = []){
         return $this->request('get',$action,$params);
     }
     /**
@@ -261,7 +261,7 @@ class TspClient
      * @return mixed
      * @throws \Exception
      */
-    private function post($action,$params){
+    private function post($action,$params = []){
         return $this->request('post',$action,$params);
     }
 
