@@ -279,7 +279,8 @@ class TspClient
         $http->setHeader('source', 'TspClientSdk');
         $http->setHeader('token',$this->config['token']);
         $http->setDefaultJsonDecoder($assoc = true);
-        $result = $http->$type($this->config['gateway'], ['action'=>$action,'data'=>$params]);
+        $params['action'] = $action;
+        $result = $http->$type($this->config['gateway'], $params);
         if ($http->error) {
             throw new \Exception($http->errorMessage,$http->errorCode);
         } else {
