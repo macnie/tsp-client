@@ -172,13 +172,26 @@ class TspClient
      * @return mixed
      * @throws \Exception
      */
+    public function setSos($imei_sn,$families = []){
+        if(empty($families)){
+            throw new \Exception('亲情号不能为空');
+        }
+        return $this->post('setFamilies',['imei_sn'=>$imei_sn,'families'=>$families]);
+    }
+    /**
+     * @param string $imei_sn
+     * @param array $families
+     *                  param $relation 关系名称
+     *                  param $mobile 手机号
+     * @return mixed
+     * @throws \Exception
+     */
     public function setFamilies($imei_sn,$families = []){
         if(empty($families)){
             throw new \Exception('亲情号不能为空');
         }
-        return $this->post('setFamily',['imei_sn'=>$imei_sn,'families'=>$families]);
+        return $this->post('setFamilies',['imei_sn'=>$imei_sn,'families'=>$families]);
     }
-
     /**
      * 设置上报时间间隔
      * @param string $imei_sn
