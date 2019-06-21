@@ -278,11 +278,11 @@ class TspClient
         $http->setHeader('ContentType', 'application/json');
         $http->setHeader('source', 'TspClientSdk');
         $http->setHeader('token',$this->config['token']);
-        $res = $http->$type($this->config['gateway'], ['action'=>$action,'data'=>$params]);
+        $http->setDefaultJsonDecoder($assoc = true);
+        $result = $http->$type($this->config['gateway'], ['action'=>$action,'data'=>$params]);
         if ($http->error) {
             throw new \Exception($http->errorMessage,$http->errorCode);
         } else {
-            $result = json_decode($res,true);
             return $result;
         }
     }
