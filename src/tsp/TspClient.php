@@ -18,7 +18,7 @@ namespace Macnie\Tsp;
 use Aliyun\OTS\Consts\DirectionConst;
 use Aliyun\OTS\OTSClient;
 use Curl\Curl;
-use think\facade\Config;
+use Macnie\Network\Redis;
 
 class TspClient
 {
@@ -36,10 +36,14 @@ class TspClient
     /**
      * 判断设备是否在线
      * @param string $imei_sn
+     * @return bool
      */
     public function isOnline($imei_sn){
         $res = $this->get('isOnline',['imei_sn'=>$imei_sn]);
-        return $res['data']['is_online'];
+        if($res['status'] == 200){
+            return $res['data']['is_online'];
+        }
+        return false;
     }
 
     /**
@@ -48,8 +52,7 @@ class TspClient
      * @throws \Exception
      */
     public function getOnlineCount(){
-        $res = $this->get('getOnlineCount');
-        return $res['data']['online_count'];
+        return $this->get('getOnlineCount');
     }
     /**
      * 获取IMEI当前所有信息
@@ -295,7 +298,7 @@ class TspClient
         $params['action'] = $action;
         $result = $http->$type($this->config['gateway'], $params);
         if ($http->error) {
-            throw new \Exception($http->errorMessage,$http->errorCode);
+            return ['status'=>500,'message'=>$http->errorMessage];
         } else {
             return $result;
         }
