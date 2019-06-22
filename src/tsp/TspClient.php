@@ -179,7 +179,7 @@ class TspClient
         if(empty($families)){
             throw new \Exception('亲情号不能为空');
         }
-        return $this->post('setFamilies',['imei_sn'=>$imei_sn,'families'=>$families]);
+        return $this->post('setSos',['imei_sn'=>$imei_sn,'families'=>$families]);
     }
     /**
      * @param string $imei_sn
