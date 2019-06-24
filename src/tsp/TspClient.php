@@ -70,40 +70,43 @@ class TspClient
      * @return array
      */
     public function getTracks($imei_sn,$start_time,$end_time){
-
-        $client = new OTSClient([
-            'EndPoint' => $this->config['tablestore']['gateway'],
-            'AccessKeyID' => $this->config['tablestore']['appkey'],
-            'AccessKeySecret' => $this->config['tablestore']['secret'],
-            'InstanceName' => $this->config['tablestore']['database'],
-            'DebugLogHandler'=>false
-        ]);
-        $startPK = [
-            ['imei', md5($imei_sn)],
-            ['created', $start_time]
-        ];
-        $endPK = [
-            ['imei', md5($imei_sn)],
-            ['created',$end_time]
-        ];
-        $tracks = [];
-        while (! empty ($startPK)) {
-            $request = [
-                'table_name' => 'tracks',
-                'max_versions' => 1,
-                'direction' => DirectionConst::CONST_FORWARD, // 方向可以为 FORWARD 或者 BACKWARD
-                'inclusive_start_primary_key' => $startPK, // 开始主键
-                'exclusive_end_primary_key' => $endPK,
-                'limit'=>20
+        try{
+            $client = new OTSClient([
+                'EndPoint' => $this->config['tablestore']['gateway'],
+                'AccessKeyID' => $this->config['tablestore']['appkey'],
+                'AccessKeySecret' => $this->config['tablestore']['secret'],
+                'InstanceName' => $this->config['tablestore']['database'],
+                'DebugLogHandler'=>false
+            ]);
+            $startPK = [
+                ['imei', md5($imei_sn)],
+                ['created', $start_time]
             ];
-            $response = $client->getRange ($request);
-            foreach ($response['rows'] as $rowData) {
-                // 处理每一行数据
-                $tracks[] = ['direction'=>$rowData['attribute_columns'][3][1],'speed'=>$rowData['attribute_columns'][9][1],'blng'=>$rowData['attribute_columns'][2][1],'blat'=>$rowData['attribute_columns'][1][1],'locate_type'=>$rowData['attribute_columns'][7][1],'locate_time'=>$rowData['attribute_columns'][5][1]];
+            $endPK = [
+                ['imei', md5($imei_sn)],
+                ['created',$end_time]
+            ];
+            $tracks = [];
+            while (! empty ($startPK)) {
+                $request = [
+                    'table_name' => 'tracks',
+                    'max_versions' => 1,
+                    'direction' => DirectionConst::CONST_FORWARD, // 方向可以为 FORWARD 或者 BACKWARD
+                    'inclusive_start_primary_key' => $startPK, // 开始主键
+                    'exclusive_end_primary_key' => $endPK,
+                    'limit'=>20
+                ];
+                $response = $client->getRange ($request);
+                foreach ($response['rows'] as $rowData) {
+                    // 处理每一行数据
+                    $tracks[] = ['direction'=>$rowData['attribute_columns'][3][1],'speed'=>$rowData['attribute_columns'][9][1],'blng'=>$rowData['attribute_columns'][2][1],'blat'=>$rowData['attribute_columns'][1][1],'locate_type'=>$rowData['attribute_columns'][7][1],'locate_time'=>$rowData['attribute_columns'][5][1]];
+                }
+                $startPK = $response['next_start_primary_key'];
             }
-            $startPK = $response['next_start_primary_key'];
+            return ['status'=>200,'message'=>'获取成功','data'=>$tracks];
+        }catch (\Exception $e){
+            return ['status'=>500,'message'=>$e->getMessage()];
         }
-        return $tracks;
     }
 
     /**
@@ -115,37 +118,42 @@ class TspClient
      */
     public function getMessages($imei_sn, $start_time, $end_time)
     {
-        $client = new OTSClient([
-            'EndPoint' => $this->config['tablestore']['gateway'],
-            'AccessKeyID' => $this->config['tablestore']['appkey'],
-            'AccessKeySecret' => $this->config['tablestore']['secret'],
-            'InstanceName' => $this->config['tablestore']['database'],
-            'DebugLogHandler'=>false
-        ]);
-        $startPK = [
-            ['imei', md5($imei_sn)],
-            ['created', $end_time]
-        ];
-        $endPK = [
-            ['imei', md5($imei_sn)],
-            ['created',$start_time]
-        ];
-        $messages = [];
-        while (! empty ($startPK)) {
-            $request = [
-                'table_name' => 'messages',
-                'max_versions' => 1,
-                'direction' => DirectionConst::CONST_BACKWARD, // 方向可以为 FORWARD 或者 BACKWARD
-                'inclusive_start_primary_key' => $startPK, // 开始主键
-                'exclusive_end_primary_key' => $endPK
+        try{
+            $client = new OTSClient([
+                'EndPoint' => $this->config['tablestore']['gateway'],
+                'AccessKeyID' => $this->config['tablestore']['appkey'],
+                'AccessKeySecret' => $this->config['tablestore']['secret'],
+                'InstanceName' => $this->config['tablestore']['database'],
+                'DebugLogHandler'=>false
+            ]);
+            $startPK = [
+                ['imei', md5($imei_sn)],
+                ['created', $end_time]
             ];
-            $response = $client->getRange ($request);
-            foreach ($response['rows'] as $rowData) {
-                $messages[] = ['message'=>$rowData['attribute_columns'][0][1],'created'=>date('Y-m-d H:i:s',$rowData['primary_key'][1][1])];
+            $endPK = [
+                ['imei', md5($imei_sn)],
+                ['created',$start_time]
+            ];
+            $messages = [];
+            while (! empty ($startPK)) {
+                $request = [
+                    'table_name' => 'messages',
+                    'max_versions' => 1,
+                    'direction' => DirectionConst::CONST_BACKWARD, // 方向可以为 FORWARD 或者 BACKWARD
+                    'inclusive_start_primary_key' => $startPK, // 开始主键
+                    'exclusive_end_primary_key' => $endPK
+                ];
+                $response = $client->getRange ($request);
+                foreach ($response['rows'] as $rowData) {
+                    $messages[] = ['message'=>$rowData['attribute_columns'][0][1],'created'=>date('Y-m-d H:i:s',$rowData['primary_key'][1][1])];
+                }
+                $startPK = $response['next_start_primary_key'];
             }
-            $startPK = $response['next_start_primary_key'];
+            return ['status'=>200,'message'=>'获取成功','data'=>$messages];
+        }catch (\Exception $e){
+            return ['status'=>500,'message'=>$e->getMessage()];
         }
-        return $messages;
+
     }
 
     /**
