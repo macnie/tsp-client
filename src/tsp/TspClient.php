@@ -99,7 +99,15 @@ class TspClient
                 $response = $client->getRange ($request);
                 foreach ($response['rows'] as $rowData) {
                     // 处理每一行数据
-                    $tracks[] = ['direction'=>$rowData['attribute_columns'][3][1],'speed'=>$rowData['attribute_columns'][9][1],'blng'=>$rowData['attribute_columns'][2][1],'blat'=>$rowData['attribute_columns'][1][1],'locate_type'=>$rowData['attribute_columns'][7][1],'locate_time'=>$rowData['attribute_columns'][5][1]];
+                    $tracks[] = [
+                        'blat'=>$rowData['attribute_columns'][1][1],
+                        'blng'=>$rowData['attribute_columns'][2][1],
+                        'direction'=>$rowData['attribute_columns'][3][1],
+                        'locate_time'=>$rowData['attribute_columns'][4][1],
+                        'locate_type'=>$rowData['attribute_columns'][5][1],
+                        'radius'=>$rowData['attribute_columns'][6][1],
+                        'speed'=>$rowData['attribute_columns'][7][1],
+                    ];
                 }
                 $startPK = $response['next_start_primary_key'];
             }
