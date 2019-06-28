@@ -3,7 +3,6 @@
  * TSP-Client-SDK
  * @author macnie<mac@lenmy.com>
  * @since 2019.6.19
- * @version 1.0.0
  * @example
  * try{
  *      $client = new \Macnie\Tsp\TspClient( ['gateway'=>'','token'=>''] );
