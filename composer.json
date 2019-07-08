@@ -14,8 +14,7 @@
   ],
   "require": {
     "php": ">=7.2.0",
-    "php-curl-class/php-curl-class": "*",
-    "aliyun/aliyun-tablestore-sdk-php": "~5.0"
+    "php-curl-class/php-curl-class": "*"
   },
   "autoload" : {
     "psr-4": {
