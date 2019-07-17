@@ -2,7 +2,7 @@ TspSDK
 ------
 Tsp系统的HTTP中间件层连接SDK。
 
-`V 1.0.11`
+`V 1.0.14`
 
 ## 使用方法
 
@@ -13,12 +13,6 @@ try{
      $config = [
         'gateway'=>'',
         'token'=>'',
-        'tablestore'=>[
-            'gateway'=>'',
-            'appkey'=>'',
-            'secret'=>'',
-            'database'=>''
-        ]
      ];
      $client = new TspClient($config);
      $res = $client->setHost($imei_sn,$host,$port);

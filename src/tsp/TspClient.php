@@ -152,6 +152,29 @@ class TspClient
     }
 
     /**
+     * 设置免打扰时间 最多五条
+     * @param string $imei_sn
+     * @param array $params
+     * [
+     *      [
+     *          'time'=>['08:00','12:00'],
+     *          'date'=>[1,2,3,4,5]
+     *      ],
+     *      [
+     *          'time'=>[start_time,end_time],
+     *          'date'=>[1,2,3,4,5,6,7]
+     *      ]
+     * ]
+     * @return array
+     * @throws
+     */
+    public function setDnd($imei_sn,$params){
+        if(!is_array($params) || count($params) > 5){
+            return ['status'=>500,'message'=>'免打扰时间段最多允许5条记录'];
+        }
+        return $this->post('setDns',['imei_sn'=>$imei_sn,'params'=>$params]);
+    }
+    /**
      * 系统设置
      * @param string $imei_sn
      * @param array $params
