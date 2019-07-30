@@ -192,8 +192,8 @@ class TspClient
      * @param string $imei_sn 设备编号
      * @param string $message 报文内容
      */
-    public function sendMessage($imei_sn,$message){
-        return $this->post('sendMessage',['imei_sn'=>$imei_sn,'message'=>$message]);
+    public function setMessage($imei_sn,$message){
+        return $this->post('setMessage',['imei_sn'=>$imei_sn,'message'=>$message]);
     }
 
     /**
