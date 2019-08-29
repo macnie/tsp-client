@@ -50,8 +50,8 @@ class TspClient
      * @return mixed
      * @throws \Exception
      */
-    public function getOnlineCount(){
-        return $this->get('getOnlineCount');
+    public function getOnlineCount($partner_id = 0){
+        return $this->get('getOnlineCount',['partner_id'=>$partner_id]);
     }
     /**
      * 获取IMEI当前所有信息
