@@ -47,11 +47,22 @@ class TspClient
 
     /**
      * 获取当前合作方的在线设备数量
+     * @param int $partner_id
      * @return mixed
      * @throws \Exception
      */
     public function getOnlineCount($partner_id = 0){
         return $this->get('getOnlineCount',['partner_id'=>$partner_id]);
+    }
+
+    /**
+     * 获取所有设备的信息
+     * @param int $partner_id
+     * @return mixed
+     * @throws \Exception
+     */
+    public function getOnlineDevices($partner_id = 0){
+        return $this->get('getOnlineDevices',['partner_id'=>$partner_id]);
     }
     /**
      * 获取IMEI当前所有信息
