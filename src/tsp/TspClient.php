@@ -185,6 +185,17 @@ class TspClient
         }
         return $this->post('setDns',['imei_sn'=>$imei_sn,'params'=>$params]);
     }
+
+    /**
+     * 设置SIM锁开关
+     * @param $imei_sn
+     * @param $status 加锁为1，解锁为0
+     * @return mixed
+     * @throws \Exception
+     */
+    public function setSimLock($imei_sn,$status){
+        return $this->post('setSimLock',['imei_sn'=>$imei_sn,'status'=>$status]);
+    }
     /**
      * 系统设置
      * @param string $imei_sn
