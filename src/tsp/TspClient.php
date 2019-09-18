@@ -165,48 +165,63 @@ class TspClient
     /**
      * 设置免打扰时间 最多五条
      * @param string $imei_sn
-     * @param array $params
-     * [
-     *      [
-     *          'time'=>['08:00','12:00'],
-     *          'date'=>[1,2,3,4,5]
-     *      ],
-     *      [
-     *          'time'=>[start_time,end_time],
-     *          'date'=>[1,2,3,4,5,6,7]
-     *      ]
-     * ]
-     * @return array
+     * @param string $params 如：8:00-11:30|123456;14:00-17:30|12345
      * @throws
      */
-    public function setDnd($imei_sn,$params){
-        if(!is_array($params) || count($params) > 5){
+    public function setDnd($imei_sn,$string){
+        if(count(explode('|',$string)) >5){
             return ['status'=>500,'message'=>'免打扰时间段最多允许5条记录'];
         }
-        return $this->post('setDns',['imei_sn'=>$imei_sn,'params'=>$params]);
+        return $this->post('setDnd',['imei_sn'=>$imei_sn,'param'=>$string]);
     }
 
     /**
      * 设置SIM锁开关
      * @param $imei_sn
-     * @param $status 加锁为1，解锁为0
-     * @return mixed
+     * @param int $status 加锁为1，解锁为0
      * @throws \Exception
      */
     public function setSimLock($imei_sn,$status){
         return $this->post('setSimLock',['imei_sn'=>$imei_sn,'status'=>$status]);
     }
     /**
-     * 系统设置
+     * 设置休眠时间
      * @param string $imei_sn
-     * @param array $params
-     *          param $mobile 手机号
-     *          param $class_dispar  上课禁用时段 如：08:00-11:30|14:00-16:30|12345，表示：上午八点到十一点半，下午两点到四点半。从周一到周五
-     *          param $sleep_time   休眠时间
-     *          param $awake_time   唤醒时间
+     * @param string start 开始时间(m-d) 如：21:00
+     * @param string end 结束时间(m-d) 如：07:00
      */
-    public function setOptions($imei_sn,$params = []){
-        return $this->post('setOptions',['imei_sn'=>$imei_sn,'params'=>$params]);
+    public function setSleep($imei_sn,$start,$end){
+        return $this->post('setSleep',['imei_sn'=>$imei_sn,'start'=>$start,'end'=>$end]);
+    }
+
+    /**
+     * 设置心率异常报警开关
+     * @param $imei_sn
+     * @param int $status 0：关闭；1：打开
+     * @param int $min 最小心率
+     * @param int $max 最大心率
+     */
+    public function setHrsetal($imei_sn,$status,$min = 0,$max = 255){
+        return $this->post('setHrsetal',['imei_sn'=>$imei_sn,'status'=>$status,'min'=>$min,'max'=>$max]);
+    }
+
+    /**
+     * 设置心率上传时间间隔
+     * @param $imei_sn
+     * @param int $second 单位秒,连续上传时最小时间不小于 300 秒，最大不超过 65535.
+     */
+    public function setHrtstart($imei_sn,$second = 600){
+        return $this->post('setHrtstart',['imei_sn'=>$imei_sn,'second'=>$second]);
+    }
+
+    /**
+     * 清空设备信息
+     * @param $imei_sn
+     * @return mixed
+     * @throws \Exception
+     */
+    public function setClear($imei_sn){
+        return $this->post('setClear',['imei_sn'=>$imei_sn]);
     }
 
     /**
