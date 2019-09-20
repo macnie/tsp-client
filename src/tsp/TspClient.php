@@ -184,16 +184,16 @@ class TspClient
     public function setSimLock($imei_sn,$status){
         return $this->post('setSimLock',['imei_sn'=>$imei_sn,'status'=>$status]);
     }
+
     /**
-     * 设置休眠时间
+     * 设置定位时间段
      * @param string $imei_sn
      * @param string start 开始时间(m-d) 如：21:00
      * @param string end 结束时间(m-d) 如：07:00
      */
-    public function setSleep($imei_sn,$start,$end){
-        return $this->post('setSleep',['imei_sn'=>$imei_sn,'start'=>$start,'end'=>$end]);
+    public function setUdtime($imei_sn,$start,$end){
+        return $this->post('setUdtime',['imei_sn'=>$imei_sn,'start'=>$start,'end'=>$end]);
     }
-
     /**
      * 设置心率异常报警开关
      * @param $imei_sn
