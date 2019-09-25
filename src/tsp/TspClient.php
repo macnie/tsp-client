@@ -232,7 +232,14 @@ class TspClient
     public function setMessage($imei_sn,$message){
         return $this->post('setMessage',['imei_sn'=>$imei_sn,'message'=>$message]);
     }
-
+    /**
+     * 发送文本屏显信息
+     * @param string $imei_sn 设备编号
+     * @param string $message 报文内容
+     */
+    public function setText($imei_sn,$text){
+        return $this->post('setText',['imei_sn'=>$imei_sn,'text'=>$text]);
+    }
     /**
      * 封装的GET方法
      * @param $action
