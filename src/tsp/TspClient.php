@@ -27,7 +27,7 @@ class TspClient
     public function __construct($params = [])
     {
         $this->config = $params;
-        if(!isset($this->config['gateway']) || empty($this->config['gateway']) || !isset($this->config['token']) || empty($this->config['token'])){
+        if (!isset($this->config['gateway']) || empty($this->config['gateway']) || !isset($this->config['token']) || empty($this->config['token'])) {
             throw new \Exception('Configure File Miss Gateway Or Token Param!');
         }
     }
@@ -37,9 +37,10 @@ class TspClient
      * @param string $imei_sn
      * @return bool
      */
-    public function isOnline($imei_sn){
-        $res = $this->get('isOnline',['imei_sn'=>$imei_sn]);
-        if($res['status'] == 200){
+    public function isOnline($imei_sn)
+    {
+        $res = $this->get('isOnline', ['imei_sn' => $imei_sn]);
+        if ($res['status'] == 200) {
             return $res['data']['is_online'];
         }
         return false;
@@ -51,8 +52,9 @@ class TspClient
      * @return mixed
      * @throws \Exception
      */
-    public function getOnlineCount($partner_id = 0){
-        return $this->get('getOnlineCount',['partner_id'=>$partner_id]);
+    public function getOnlineCount($partner_id = 0)
+    {
+        return $this->get('getOnlineCount', ['partner_id' => $partner_id]);
     }
 
     /**
@@ -61,23 +63,27 @@ class TspClient
      * @return mixed
      * @throws \Exception
      */
-    public function getOnlineDevices($partner_id = 0){
-        return $this->get('getOnlineDevices',['partner_id'=>$partner_id]);
+    public function getOnlineDevices($partner_id = 0)
+    {
+        return $this->get('getOnlineDevices', ['partner_id' => $partner_id]);
     }
+
     /**
      * 获取IMEI当前所有信息
      * @param string $imei_sn
      */
-    public function getImei($imei_sn){
-        return $this->get('getImei',['imei_sn'=>$imei_sn]);
+    public function getImei($imei_sn)
+    {
+        return $this->get('getImei', ['imei_sn' => $imei_sn]);
     }
 
     /**
      * 请求设备当前位置
      * @param string $imei_sn
      */
-    public function setLocate($imei_sn){
-        return $this->post('setLocate',['imei_sn'=>$imei_sn]);
+    public function setLocate($imei_sn)
+    {
+        return $this->post('setLocate', ['imei_sn' => $imei_sn]);
     }
 
     /**
@@ -87,8 +93,9 @@ class TspClient
      * @return mixed
      * @throws \Exception
      */
-    public function setMonitor($imei_sn,$mobile = ''){
-        return $this->post('setMonitor',['imei_sn'=>$imei_sn,'mobile'=>$mobile]);
+    public function setMonitor($imei_sn, $mobile = '')
+    {
+        return $this->post('setMonitor', ['imei_sn' => $imei_sn, 'mobile' => $mobile]);
     }
 
     /**
@@ -99,12 +106,14 @@ class TspClient
      * @return mixed
      * @throws \Exception
      */
-    public function setSos($imei_sn,$families = []){
-        if(empty($families)){
+    public function setSos($imei_sn, $families = [])
+    {
+        if (empty($families)) {
             throw new \Exception('亲情号不能为空');
         }
-        return $this->post('setSos',['imei_sn'=>$imei_sn,'families'=>$families]);
+        return $this->post('setSos', ['imei_sn' => $imei_sn, 'families' => $families]);
     }
+
     /**
      * @param string $imei_sn
      * @param array $families
@@ -113,19 +122,22 @@ class TspClient
      * @return mixed
      * @throws \Exception
      */
-    public function setFamilies($imei_sn,$families = []){
-        if(empty($families)){
+    public function setFamilies($imei_sn, $families = [])
+    {
+        if (empty($families)) {
             throw new \Exception('亲情号不能为空');
         }
-        return $this->post('setFamilies',['imei_sn'=>$imei_sn,'families'=>$families]);
+        return $this->post('setFamilies', ['imei_sn' => $imei_sn, 'families' => $families]);
     }
+
     /**
      * 设置上报时间间隔
      * @param string $imei_sn
      * @param int $second
      */
-    public function setUpload($imei_sn,$second = 60){
-        return $this->post('setUpload',['imei_sn'=>$imei_sn,'second'=>$second]);
+    public function setUpload($imei_sn, $second = 60)
+    {
+        return $this->post('setUpload', ['imei_sn' => $imei_sn, 'second' => $second]);
     }
 
     /**
@@ -134,32 +146,36 @@ class TspClient
      * @param string $host 主机IP
      * @param integer $port 端口
      */
-    public function setHost($imei_sn,$host,$port = 2232){
-        return $this->post('setHost',['imei_sn'=>$imei_sn,'host'=>$host,'port'=>$port]);
+    public function setHost($imei_sn, $host, $port = 2232)
+    {
+        return $this->post('setHost', ['imei_sn' => $imei_sn, 'host' => $host, 'port' => $port]);
     }
 
     /**
      * 让设备关机
      * @param string $imei_sn
      */
-    public function setPowerOff($imei_sn){
-        return $this->post('setPowerOff',['imei_sn'=>$imei_sn]);
+    public function setPowerOff($imei_sn)
+    {
+        return $this->post('setPowerOff', ['imei_sn' => $imei_sn]);
     }
 
     /**
      * 让设备重启
      * @param string $imei_sn
      */
-    public function setRestart($imei_sn){
-        return $this->post('setRestart',['imei_sn'=>$imei_sn]);
+    public function setRestart($imei_sn)
+    {
+        return $this->post('setRestart', ['imei_sn' => $imei_sn]);
     }
 
     /**
      * 寻找设备
      * @param string $imei_sn
      */
-    public function setFind($imei_sn){
-        return $this->post('setFind',['imei_sn'=>$imei_sn]);
+    public function setFind($imei_sn)
+    {
+        return $this->post('setFind', ['imei_sn' => $imei_sn]);
     }
 
     /**
@@ -168,11 +184,12 @@ class TspClient
      * @param string $params 如：8:00-11:30|123456;14:00-17:30|12345
      * @throws
      */
-    public function setDnd($imei_sn,$string){
-        if(count(explode('|',$string)) >5){
-            return ['status'=>500,'message'=>'免打扰时间段最多允许5条记录'];
+    public function setDnd($imei_sn, $string)
+    {
+        if (count(explode(';', $string)) > 5) {
+            return ['status' => 500, 'message' => '免打扰时间段最多允许5条记录'];
         }
-        return $this->post('setDnd',['imei_sn'=>$imei_sn,'param'=>$string]);
+        return $this->post('setDnd', ['imei_sn' => $imei_sn, 'param' => $string]);
     }
 
     /**
@@ -181,8 +198,9 @@ class TspClient
      * @param int $status 加锁为1，解锁为0
      * @throws \Exception
      */
-    public function setSimLock($imei_sn,$status){
-        return $this->post('setSimLock',['imei_sn'=>$imei_sn,'status'=>$status]);
+    public function setSimLock($imei_sn, $status)
+    {
+        return $this->post('setSimLock', ['imei_sn' => $imei_sn, 'status' => $status]);
     }
 
     /**
@@ -191,9 +209,11 @@ class TspClient
      * @param string start 开始时间(m-d) 如：21:00
      * @param string end 结束时间(m-d) 如：07:00
      */
-    public function setUdtime($imei_sn,$start,$end){
-        return $this->post('setUdtime',['imei_sn'=>$imei_sn,'start'=>$start,'end'=>$end]);
+    public function setUdtime($imei_sn, $start, $end)
+    {
+        return $this->post('setUdtime', ['imei_sn' => $imei_sn, 'start' => $start, 'end' => $end]);
     }
+
     /**
      * 设置心率异常报警开关
      * @param $imei_sn
@@ -201,8 +221,9 @@ class TspClient
      * @param int $min 最小心率
      * @param int $max 最大心率
      */
-    public function setHrsetal($imei_sn,$status,$min = 0,$max = 255){
-        return $this->post('setHrsetal',['imei_sn'=>$imei_sn,'status'=>$status,'min'=>$min,'max'=>$max]);
+    public function setHrsetal($imei_sn, $status, $min = 0, $max = 255)
+    {
+        return $this->post('setHrsetal', ['imei_sn' => $imei_sn, 'status' => $status, 'min' => $min, 'max' => $max]);
     }
 
     /**
@@ -210,8 +231,9 @@ class TspClient
      * @param $imei_sn
      * @param int $second 单位秒,连续上传时最小时间不小于 300 秒，最大不超过 65535.
      */
-    public function setHrtstart($imei_sn,$second = 600){
-        return $this->post('setHrtstart',['imei_sn'=>$imei_sn,'second'=>$second]);
+    public function setHrtstart($imei_sn, $second = 600)
+    {
+        return $this->post('setHrtstart', ['imei_sn' => $imei_sn, 'second' => $second]);
     }
 
     /**
@@ -220,8 +242,9 @@ class TspClient
      * @return mixed
      * @throws \Exception
      */
-    public function setClear($imei_sn){
-        return $this->post('setClear',['imei_sn'=>$imei_sn]);
+    public function setClear($imei_sn)
+    {
+        return $this->post('setClear', ['imei_sn' => $imei_sn]);
     }
 
     /**
@@ -229,17 +252,21 @@ class TspClient
      * @param string $imei_sn 设备编号
      * @param string $message 报文内容
      */
-    public function setMessage($imei_sn,$message){
-        return $this->post('setMessage',['imei_sn'=>$imei_sn,'message'=>$message]);
+    public function setMessage($imei_sn, $message)
+    {
+        return $this->post('setMessage', ['imei_sn' => $imei_sn, 'message' => $message]);
     }
+
     /**
      * 发送文本屏显信息
      * @param string $imei_sn 设备编号
      * @param string $message 报文内容
      */
-    public function setText($imei_sn,$text){
-        return $this->post('setText',['imei_sn'=>$imei_sn,'text'=>$text]);
+    public function setText($imei_sn, $text)
+    {
+        return $this->post('setText', ['imei_sn' => $imei_sn, 'text' => $text]);
     }
+
     /**
      * 封装的GET方法
      * @param $action
@@ -247,9 +274,11 @@ class TspClient
      * @return mixed
      * @throws \Exception
      */
-    private function get($action,$params = []){
-        return $this->request('get',$action,$params);
+    private function get($action, $params = [])
+    {
+        return $this->request('get', $action, $params);
     }
+
     /**
      * 封装的POST方法
      * @param $action
@@ -257,8 +286,9 @@ class TspClient
      * @return mixed
      * @throws \Exception
      */
-    private function post($action,$params = []){
-        return $this->request('post',$action,$params);
+    private function post($action, $params = [])
+    {
+        return $this->request('post', $action, $params);
     }
 
     /**
@@ -268,17 +298,17 @@ class TspClient
      * @return mixed
      * @throws \Exception
      */
-    private function request($type = 'post',$action = 'test',$params = [])
+    private function request($type = 'post', $action = 'test', $params = [])
     {
         $http = new Curl();
         $http->setHeader('ContentType', 'application/json');
         $http->setHeader('source', 'TspClientSdk');
-        $http->setHeader('token',$this->config['token']);
+        $http->setHeader('token', $this->config['token']);
         $http->setDefaultJsonDecoder($assoc = true);
         $params['action'] = $action;
         $result = $http->$type($this->config['gateway'], $params);
         if ($http->error) {
-            return ['status'=>500,'message'=>$http->errorMessage];
+            return ['status' => 500, 'message' => $http->errorMessage];
         } else {
             return $result;
         }
