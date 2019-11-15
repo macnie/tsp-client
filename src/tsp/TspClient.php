@@ -308,7 +308,12 @@ class TspClient
         $params['action'] = $action;
         $result = $http->$type($this->config['gateway'], $params);
         if ($http->error) {
-            return ['status' => 500, 'message' => $http->errorMessage];
+            if($http->errorCode == 7){
+                $status = 107;
+            }else{
+                $status = $http->errorCode;
+            }
+            return ['status' => $status, 'message' => $http->errorMessage];
         } else {
             return $result;
         }
