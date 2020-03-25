@@ -111,6 +111,11 @@ class TspClient
         if (empty($families)) {
             throw new \Exception('亲情号不能为空');
         }
+        foreach($families as $k=>$r){
+            $families[$k]['no'] = $k+1;
+            $families[$k]['name'] = isset($r['relation'])?$r['relation']:'';
+            $families[$k]['mobile'] = isset($r['mobile'])?$r['mobile']:'';
+        }
         return $this->post('setSos', ['imei_sn' => $imei_sn, 'families' => $families]);
     }
 
@@ -126,6 +131,11 @@ class TspClient
     {
         if (empty($families)) {
             throw new \Exception('亲情号不能为空');
+        }
+        foreach($families as $k=>$r){
+            $families[$k]['no'] = $k+1;
+            $families[$k]['name'] = isset($r['relation'])?$r['relation']:'';
+            $families[$k]['mobile'] = isset($r['mobile'])?$r['mobile']:'';
         }
         return $this->post('setFamilies', ['imei_sn' => $imei_sn, 'families' => $families]);
     }
