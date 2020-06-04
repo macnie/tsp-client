@@ -258,6 +258,28 @@ class TspClient
     }
 
     /**
+     * 设置设备绑定
+     * @param $imei_sn
+     * @param $data 参数: ["product_id"=>xxx,"app_id"=>xxx,"user_id"=>xxx,"locate_mode"=>xxx,"truename"=>"xxx","mobile"=>"xxx"]
+     * @return mixed
+     * @throws \Exception
+     */
+    public function setBind($imei_sn,$data = []){
+        return $this->post('setBind',['imei_sn'=>$imei_sn,'data'=>$data]);
+    }
+
+    /**
+     * 设置定位模式
+     * @param $imei_sn
+     * @param $locate_mode 1：省电模式（3600秒上报一次位置） 2：智能模式 （600秒上报一次位置）3：性能模式（360秒上报一次位置）
+     * @return mixed
+     * @throws \Exception
+     */
+    public function setLocateMode($imei_sn,$locate_mode = 2){
+        return $this->post('setLocateMode',['imei_sn'=>$imei_sn,'locate_mode'=>$locate_mode]);
+    }
+
+    /**
      * 透传报文
      * @param string $imei_sn 设备编号
      * @param string $message 报文内容
